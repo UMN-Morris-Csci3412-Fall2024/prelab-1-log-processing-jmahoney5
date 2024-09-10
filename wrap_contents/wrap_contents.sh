@@ -1,32 +1,34 @@
 #!/bin/bash
 
-# Check if the correct number of arguments is provided
 if [ "$#" -ne 3 ]; then
-  echo "Usage: $0 <middle_file> <ends_file> <output_file>"
+  echo "Usage: $0 <middle_file> <specifier> <output_file>"
   exit 1
 fi
 
 middle_file=$1
-ends_file=$2
+specifier=$2
 output_file=$3
 
-# Check if the input files exist
+header_file="${specifier}_header.html"
+footer_file="${specifier}_footer.html"
+
 if [ ! -f "$middle_file" ]; then
-  echo "Error: $middle_file does not exist."
-  exit 1
-fi
-if [ ! -f "$ends_file" ]; then
-  echo "Error: $ends_file does not exist."
+  echo "Middle file $middle_file does not exist."
   exit 1
 fi
 
-# Read the content of the ends file
-header=$(head -n 1 "$ends_file")
-footer=$(tail -n 1 "$ends_file")
+if [ ! -f "$header_file" ]; then
+  echo "Header file $header_file does not exist."
+  exit 1
+fi
 
-# Create the output file
+if [ ! -f "$footer_file" ]; then
+  echo "Footer file $footer_file does not exist."
+  exit 1
+fi
+
 {
-  echo "$header"
+  cat "$header_file"
   cat "$middle_file"
-  echo "$footer"
+  cat "$footer_file"
 } > "$output_file"
