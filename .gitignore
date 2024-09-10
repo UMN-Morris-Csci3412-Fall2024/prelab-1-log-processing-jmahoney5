@@ -52,9 +52,6 @@ flycheck_*.el
 # network security
 /network-security.data
 
-#inputs
-exclude-paths
-
 
 ### Vim ###
 # Swap
